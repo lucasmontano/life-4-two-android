@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="moolab.com.br.life4two.ui.MainActivity.InviteFragment">
+
+    <TextView
+        android:id="@+id/invite_boo"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/text_title"
+        android:layout_height="wrap_content"
+        android:text="@string/invite_boo" />
+
+    <EditText
+        android:id="@+id/boo_phone"
+        android:layout_width="match_parent"
+        android:padding="@dimen/padding_intern"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/text_input"
+        android:hint="@string/hint_telephone"
+        android:textColorHint="@color/primary"
+        android:textColor="@color/primary"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/action_invite"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/action_invite"
+        android:background="?selectableItemBackgroundBorderless"
+        android:textColor="@color/material_blue_grey_800"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

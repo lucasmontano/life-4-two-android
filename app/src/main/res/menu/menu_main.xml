@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".IntroActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="moolab.com.br.life4two.ui.MainActivity">
 
 </menu>
