@@ -1,17 +1,18 @@
 package moolab.com.br.life4two.ui;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+
+import com.parse.ParseUser;
 
 import moolab.com.br.life4two.R;
+import moolab.com.br.life4two.core.Cupid;
+import moolab.com.br.life4two.ui.fragments.InviteFragment;
+import moolab.com.br.life4two.ui.fragments.InvitedFragment;
+import moolab.com.br.life4two.ui.fragments.ReadyFragment;
+import moolab.com.br.life4two.ui.fragments.WaitingFragment;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -20,48 +21,59 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+
+            Cupid cupid = new Cupid(this);
+            cupid.getStatus(ParseUser.getCurrentUser(), new Cupid.CupidStatus() {
+                @Override
+                public void isInvited() {
+                    navToInvited();
+                }
+
+                @Override
+                public void isEmpty() {
+                    navToInvite();
+                }
+
+                @Override
+                public void isWaiting() {
+                    navToWaiting();
+                }
+
+                @Override
+                public void isReady() {
+                    navToReady();
+                }
+            });
         }
+    }
+
+    private void navToWaiting() {
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new WaitingFragment()).commit();
+    }
+
+    private void navToInvited() {
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new InvitedFragment()).commit();
+    }
+
+    private void navToReady() {
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new ReadyFragment()).commit();
+    }
+
+    private void navToInvite() {
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new InviteFragment()).commit();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
     }
 }

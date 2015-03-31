@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Life4Two</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="start">Começar</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="invite_boo">Qual o telefone do boo?</string>
+    <string name="hint_telephone">(XX) XXXX-XXXX</string>
+    <string name="action_invite">Convidar</string>
+    <string name="status_waiting">Aguardando aceite!</string>
+    <string name="status_invited">Você foi convidado por</string>
+    <string name="status_ready">Pronto para Iniciar!</string>
 </resources>

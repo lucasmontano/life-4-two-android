@@ -5,29 +5,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.digits.sdk.android.AuthCallback;
 import com.digits.sdk.android.Digits;
-import com.digits.sdk.android.DigitsAuthButton;
 import com.digits.sdk.android.DigitsException;
 import com.digits.sdk.android.DigitsSession;
 import com.parse.LogInCallback;
-import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.squareup.picasso.Picasso;
-import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 import moolab.com.br.life4two.R;
-import moolab.com.br.life4two.parsecloud.ParseConfigMaster;
 
 
 public class IntroActivity extends ActionBarActivity {
@@ -46,7 +42,9 @@ public class IntroActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+
+        Digits digits = new Digits();
+        Fabric.with(this, new TwitterCore(authConfig), digits);
 
         setContentView(R.layout.activity_intro);
 
@@ -54,6 +52,12 @@ public class IntroActivity extends ActionBarActivity {
 
         Picasso.with(this).load(R.drawable.fundo).into(bg);
         Picasso.with(this).load(R.drawable.logo).into(logo);
+
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user != null && user.isAuthenticated()) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
     @OnClick(R.id.btn_start)
@@ -62,11 +66,11 @@ public class IntroActivity extends ActionBarActivity {
             @Override
             public void success(final DigitsSession session, final String phoneNumber) {
 
-                ParseUser.logInInBackground(String.valueOf(session.getId()), phoneNumber, new LogInCallback() {
+                ParseUser.logInInBackground(phoneNumber, phoneNumber, new LogInCallback() {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
                         if (e != null) {
-                            signupParseUser(phoneNumber, session.getId());
+                            signupParseUser(phoneNumber);
                             return;
                         }
                     }
@@ -81,19 +85,30 @@ public class IntroActivity extends ActionBarActivity {
         Digits.authenticate(callback, R.style.CustomDigitsTheme);
     }
 
-    private void signupParseUser(String phoneNumber, long id) {
-        ParseUser user = new ParseUser();
-        user.setUsername(String.valueOf(id));
+    private void signupParseUser(final String phoneNumber) {
+        final ParseUser user = new ParseUser();
+        user.setUsername(phoneNumber);
         user.setPassword(phoneNumber);
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
+
                 if (e != null) {
                     return;
                 }
 
-                startActivity(new Intent(IntroActivity.this, MainActivity.class));
-                finish();
+                user.logInInBackground(phoneNumber, phoneNumber, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+
+                        if (e != null) {
+                            return;
+                        }
+
+                        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                        finish();
+                    }
+                });
             }
         });
     }
@@ -108,10 +123,6 @@ public class IntroActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
