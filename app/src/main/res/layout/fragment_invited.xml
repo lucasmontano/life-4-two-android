@@ -13,4 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/action_accept"
+        android:layout_width="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/action_accept"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/action_reject"
+        android:layout_width="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/action_reject"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

@@ -23,6 +23,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:textSize="@dimen/text_input"
         android:hint="@string/hint_telephone"
+        android:inputType="numberSigned"
         android:textColorHint="@color/primary"
         android:textColor="@color/primary"
         android:layout_height="wrap_content" />

@@ -3,9 +3,14 @@
     <string name="start">Começar</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="invite_boo">Qual o telefone do boo?</string>
-    <string name="hint_telephone">(XX) XXXX-XXXX</string>
+    <string name="hint_telephone">+55 ### ########</string>
     <string name="action_invite">Convidar</string>
     <string name="status_waiting">Aguardando aceite!</string>
     <string name="status_invited">Você foi convidado por</string>
     <string name="status_ready">Pronto para Iniciar!</string>
+    <string name="msg_invite_done">Convite enviado com sucesso!</string>
+    <string name="action_accept">Aceitar Convite</string>
+    <string name="msg_accept_done">Você aceitou o convite!</string>
+    <string name="action_reject">Rejeitar Convite</string>
+    <string name="msg_reject_done">Você rejeitou o pedido =(</string>
 </resources>
