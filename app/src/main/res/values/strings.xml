@@ -13,4 +13,6 @@
     <string name="msg_accept_done">Você aceitou o convite!</string>
     <string name="action_reject">Rejeitar Convite</string>
     <string name="msg_reject_done">Você rejeitou o pedido =(</string>
+    <string name="action_start">Fazer Aposta</string>
+    <string name="action_choose_award">Confirmar e escolher recompensa</string>
 </resources>

@@ -14,12 +14,17 @@ import com.parse.SaveCallback;
 import moolab.com.br.life4two.R;
 import moolab.com.br.life4two.core.Cupid;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
+import moolab.com.br.life4two.ui.fragments.ChooseBetOptionsFragment;
 import moolab.com.br.life4two.ui.fragments.InviteFragment;
 import moolab.com.br.life4two.ui.fragments.InvitedFragment;
 import moolab.com.br.life4two.ui.fragments.ReadyFragment;
 import moolab.com.br.life4two.ui.fragments.WaitingFragment;
 
-public class MainActivity extends ActionBarActivity implements InviteFragment.Callback, InvitedFragment.Callback {
+public class MainActivity extends ActionBarActivity
+        implements InviteFragment.Callback,
+        InvitedFragment.Callback,
+        ReadyFragment.Callback,
+        ChooseBetOptionsFragment.Callback {
 
     private Cupid cupid;
 
@@ -121,5 +126,15 @@ public class MainActivity extends ActionBarActivity implements InviteFragment.Ca
                 loadStatus();
             }
         });
+    }
+
+    @Override
+    public void onStartGame() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChooseBetOptionsFragment()).commit();
+    }
+
+    @Override
+    public void onOptionsChoosed() {
+
     }
 }
