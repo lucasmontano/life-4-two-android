@@ -3,6 +3,7 @@ package moolab.com.br.life4two.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import butterknife.OnClick;
 import moolab.com.br.life4two.R;
 import moolab.com.br.life4two.adapter.BetOptionsAdapter;
 import moolab.com.br.life4two.core.BetOptions;
+import moolab.com.br.life4two.core.model.BetOption;
+import moolab.com.br.life4two.ui.view.DividerItemDecoration;
 
 /**
  * Created by lucas on 29/03/15.
@@ -36,7 +39,7 @@ public class ChooseBetOptionsFragment extends Fragment {
     }
 
     public interface Callback {
-        public void onOptionsChoosed();
+        public void onOptionsChoosed(List<BetOption> optionsSelected);
     }
 
     @Override
@@ -59,14 +62,17 @@ public class ChooseBetOptionsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        betOptionsAdapter = new BetOptionsAdapter();
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        betOptionsAdapter = new BetOptionsAdapter(getActivity());
         mRecyclerView.setAdapter(betOptionsAdapter);
 
         BetOptions betOptions = new BetOptions(getActivity());
         betOptions.fetchBetOptions(new BetOptions.BetCallback() {
 
             @Override
-            public void onFetchBetOptions(List<ParseObject> data) {
+            public void onFetchBetOptions(List<BetOption> data) {
                 betOptionsAdapter.setData(data);
                 betOptionsAdapter.notifyDataSetChanged();
             }
@@ -77,6 +83,6 @@ public class ChooseBetOptionsFragment extends Fragment {
 
     @OnClick(R.id.action_next_step)
     public void onNextStep() {
-        mCallback.onOptionsChoosed();
+        mCallback.onOptionsChoosed(betOptionsAdapter.getSelecteds());
     }
 }

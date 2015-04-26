@@ -4,7 +4,9 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseObject;
 
+import moolab.com.br.life4two.core.model.BetOption;
 import moolab.com.br.life4two.parsecloud.ParseConfig;
 
 /**
@@ -16,6 +18,8 @@ public class App extends Application {
         super.onCreate();
 
         ParseCrashReporting.enable(this);
+
+        ParseObject.registerSubclass(BetOption.class);
         Parse.initialize(this, ParseConfig.APP_ID, ParseConfig.CLIENT_KEY);
     }
 }

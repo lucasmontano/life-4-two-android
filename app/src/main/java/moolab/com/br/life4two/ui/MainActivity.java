@@ -11,8 +11,13 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.List;
+
 import moolab.com.br.life4two.R;
+import moolab.com.br.life4two.core.Bet;
+import moolab.com.br.life4two.core.BetOptions;
 import moolab.com.br.life4two.core.Cupid;
+import moolab.com.br.life4two.core.model.BetOption;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
 import moolab.com.br.life4two.ui.fragments.ChooseBetOptionsFragment;
 import moolab.com.br.life4two.ui.fragments.InviteFragment;
@@ -134,7 +139,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onOptionsChoosed() {
+    public void onOptionsChoosed(List<BetOption> optionsSelected) {
+        Bet bet = new Bet(this);
+        bet.create(optionsSelected, new Bet.BetCallback() {
 
+            @Override
+            public void onCreateBet(boolean result) {
+
+                if (result) {
+                    Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_done)).show(MainActivity.this);
+
+                    // Go to Rewards
+                } else {
+                    Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_fail)).show(MainActivity.this);
+                }
+            }
+        });
     }
 }

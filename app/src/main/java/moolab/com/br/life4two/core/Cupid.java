@@ -56,7 +56,6 @@ public class Cupid {
 
     public Cupid(Context context) {
         this.context = context;
-        Parse.initialize(context, ParseConfig.APP_ID, ParseConfig.CLIENT_KEY);
     }
 
     public void getStatus(ParseUser user, final CupidStatus callback) {

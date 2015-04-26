@@ -15,4 +15,7 @@
     <string name="msg_reject_done">Você rejeitou o pedido =(</string>
     <string name="action_start">Fazer Aposta</string>
     <string name="action_choose_award">Confirmar e escolher recompensa</string>
+    <string name="points">pontos</string>
+    <string name="msg_bet_done">Aposta criada com sucesso!</string>
+    <string name="msg_bet_fail">Ocorreu um erro ao apostar =(</string>
 </resources>

@@ -10,6 +10,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
+import moolab.com.br.life4two.core.model.BetOption;
 import moolab.com.br.life4two.parsecloud.ParseConfig;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
 
@@ -22,12 +23,11 @@ public class BetOptions {
 
     public interface BetCallback {
 
-        public void onFetchBetOptions(List<ParseObject> data);
+        public void onFetchBetOptions(List<BetOption> data);
     }
 
     public BetOptions(Context context) {
         this.context = context;
-        Parse.initialize(context, ParseConfig.APP_ID, ParseConfig.CLIENT_KEY);
     }
 
     public void fetchBetOptions(final BetCallback betCallback) {
@@ -42,7 +42,7 @@ public class BetOptions {
 
             @Override
             public void done(Object o, Throwable throwable) {
-                betCallback.onFetchBetOptions((List<ParseObject>) o);
+                betCallback.onFetchBetOptions((List<BetOption>) o);
             }
         });
     }
