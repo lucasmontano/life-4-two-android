@@ -3,15 +3,12 @@ package moolab.com.br.life4two.core;
 import android.content.Context;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
 
-import moolab.com.br.life4two.core.model.BetOption;
-import moolab.com.br.life4two.parsecloud.ParseConfig;
+import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
 
 /**
@@ -23,7 +20,7 @@ public class BetOptions {
 
     public interface BetCallback {
 
-        public void onFetchBetOptions(List<BetOption> data);
+        public void onFetchBetOptions(List<BetOptionModel> data);
     }
 
     public BetOptions(Context context) {
@@ -42,7 +39,7 @@ public class BetOptions {
 
             @Override
             public void done(Object o, Throwable throwable) {
-                betCallback.onFetchBetOptions((List<BetOption>) o);
+                betCallback.onFetchBetOptions((List<BetOptionModel>) o);
             }
         });
     }

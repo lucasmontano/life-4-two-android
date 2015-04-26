@@ -18,4 +18,8 @@ public abstract class ParseKeysMaster {
     public static final String OPTIONS = "options";
     public static final String BY = "by";
     public static final String TO = "to";
+    public static final String OBJECT_REWARD = "Reward";
+    public static final String DESC = "desc";
+    public static final String REWARD = "reward";
+    public static final String UPDATED_AT = "updatedAt";
 }

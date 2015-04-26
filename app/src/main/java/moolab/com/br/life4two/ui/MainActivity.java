@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import com.nispok.snackbar.Snackbar;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -15,11 +14,12 @@ import java.util.List;
 
 import moolab.com.br.life4two.R;
 import moolab.com.br.life4two.core.Bet;
-import moolab.com.br.life4two.core.BetOptions;
 import moolab.com.br.life4two.core.Cupid;
-import moolab.com.br.life4two.core.model.BetOption;
+import moolab.com.br.life4two.core.model.BetModel;
+import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
 import moolab.com.br.life4two.ui.fragments.ChooseBetOptionsFragment;
+import moolab.com.br.life4two.ui.fragments.ChooseRewardFragment;
 import moolab.com.br.life4two.ui.fragments.InviteFragment;
 import moolab.com.br.life4two.ui.fragments.InvitedFragment;
 import moolab.com.br.life4two.ui.fragments.ReadyFragment;
@@ -29,9 +29,12 @@ public class MainActivity extends ActionBarActivity
         implements InviteFragment.Callback,
         InvitedFragment.Callback,
         ReadyFragment.Callback,
-        ChooseBetOptionsFragment.Callback {
+        ChooseBetOptionsFragment.Callback,
+        ChooseRewardFragment.Callback {
 
     private Cupid cupid;
+
+    private List<BetOptionModel> optionsSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +86,31 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void navToReady() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReadyFragment()).commit();
+
+        /**
+         * Check if we have some Bet in progress.
+         */
+        Bet bet = new Bet(this);
+        bet.getLastBet(new Bet.GetBetCallback() {
+            @Override
+            public void onLoad(BetModel bet) {
+                if (bet == null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReadyFragment()).commit();
+                    return;
+                }
+
+                switch (bet.getInt(ParseKeysMaster.STATUS)) {
+                    case Bet.TODO:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new WaitingFragment()).commit();
+                        return;
+                }
+            }
+        });
     }
 
     private void navToInvite() {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new InviteFragment()).commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,7 +121,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -139,17 +159,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onOptionsChoosed(List<BetOption> optionsSelected) {
+    public void onOptionsChoosed(List<BetOptionModel> optionsSelected) {
+        this.optionsSelected = optionsSelected;
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChooseRewardFragment()).commit();
+    }
+
+    @Override
+    public void onChooseReward(final String reward) {
         Bet bet = new Bet(this);
-        bet.create(optionsSelected, new Bet.BetCallback() {
+        bet.create(optionsSelected, reward, new Bet.CreateBetCallback() {
 
             @Override
             public void onCreateBet(boolean result) {
-
                 if (result) {
                     Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_done)).show(MainActivity.this);
-
-                    // Go to Rewards
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new WaitingFragment()).commit();
                 } else {
                     Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_fail)).show(MainActivity.this);
                 }

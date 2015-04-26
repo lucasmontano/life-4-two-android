@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parse.ParseObject;
-
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -20,7 +18,7 @@ import butterknife.OnClick;
 import moolab.com.br.life4two.R;
 import moolab.com.br.life4two.adapter.BetOptionsAdapter;
 import moolab.com.br.life4two.core.BetOptions;
-import moolab.com.br.life4two.core.model.BetOption;
+import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.ui.view.DividerItemDecoration;
 
 /**
@@ -39,7 +37,7 @@ public class ChooseBetOptionsFragment extends Fragment {
     }
 
     public interface Callback {
-        public void onOptionsChoosed(List<BetOption> optionsSelected);
+        public void onOptionsChoosed(List<BetOptionModel> optionsSelected);
     }
 
     @Override
@@ -72,7 +70,7 @@ public class ChooseBetOptionsFragment extends Fragment {
         betOptions.fetchBetOptions(new BetOptions.BetCallback() {
 
             @Override
-            public void onFetchBetOptions(List<BetOption> data) {
+            public void onFetchBetOptions(List<BetOptionModel> data) {
                 betOptionsAdapter.setData(data);
                 betOptionsAdapter.notifyDataSetChanged();
             }

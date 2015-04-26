@@ -9,6 +9,6 @@ import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
  * Created by lucasmontano on 26/04/15.
  */
 
-@ParseClassName(ParseKeysMaster.OBJECT_BET_OPTIONS)
-public class BetOption extends ParseObject {
+@ParseClassName(ParseKeysMaster.OBJECT_BET)
+public class BetModel extends ParseObject {
 }

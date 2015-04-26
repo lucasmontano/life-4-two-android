@@ -10,16 +10,13 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.parse.ParseObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnCheckedChanged;
 import moolab.com.br.life4two.R;
-import moolab.com.br.life4two.core.model.BetOption;
+import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
 
 /**
@@ -27,10 +24,10 @@ import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
  */
 public class BetOptionsAdapter extends RecyclerView.Adapter<BetOptionsAdapter.ViewHolder> {
 
-    private SparseArray<BetOption> selecteds = new SparseArray<BetOption>();
+    private SparseArray<BetOptionModel> selecteds = new SparseArray<BetOptionModel>();
 
     private final Context context;
-    private List<BetOption> data = new ArrayList<BetOption>();
+    private List<BetOptionModel> data = new ArrayList<BetOptionModel>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -56,7 +53,7 @@ public class BetOptionsAdapter extends RecyclerView.Adapter<BetOptionsAdapter.Vi
         this.context = context;
     }
 
-    public void setData(List<BetOption> data) {
+    public void setData(List<BetOptionModel> data) {
         this.data = data;
     }
 
@@ -107,9 +104,9 @@ public class BetOptionsAdapter extends RecyclerView.Adapter<BetOptionsAdapter.Vi
         return data.size();
     }
 
-    public List<BetOption> getSelecteds() {
+    public List<BetOptionModel> getSelecteds() {
         if (selecteds == null) return null;
-        List<BetOption> arrayList = new ArrayList<BetOption>(selecteds.size());
+        List<BetOptionModel> arrayList = new ArrayList<BetOptionModel>(selecteds.size());
         for (int i = 0; i < selecteds.size(); i++)
             arrayList.add(selecteds.valueAt(i));
         return arrayList;
