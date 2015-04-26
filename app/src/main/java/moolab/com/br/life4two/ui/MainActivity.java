@@ -11,15 +11,25 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.List;
+
 import moolab.com.br.life4two.R;
+import moolab.com.br.life4two.core.Bet;
+import moolab.com.br.life4two.core.BetOptions;
 import moolab.com.br.life4two.core.Cupid;
+import moolab.com.br.life4two.core.model.BetOption;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
+import moolab.com.br.life4two.ui.fragments.ChooseBetOptionsFragment;
 import moolab.com.br.life4two.ui.fragments.InviteFragment;
 import moolab.com.br.life4two.ui.fragments.InvitedFragment;
 import moolab.com.br.life4two.ui.fragments.ReadyFragment;
 import moolab.com.br.life4two.ui.fragments.WaitingFragment;
 
-public class MainActivity extends ActionBarActivity implements InviteFragment.Callback, InvitedFragment.Callback {
+public class MainActivity extends ActionBarActivity
+        implements InviteFragment.Callback,
+        InvitedFragment.Callback,
+        ReadyFragment.Callback,
+        ChooseBetOptionsFragment.Callback {
 
     private Cupid cupid;
 
@@ -119,6 +129,30 @@ public class MainActivity extends ActionBarActivity implements InviteFragment.Ca
                 if (e != null) return;
                 Snackbar.with(getApplicationContext()).text(getString(R.string.msg_reject_done)).show(MainActivity.this);
                 loadStatus();
+            }
+        });
+    }
+
+    @Override
+    public void onStartGame() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ChooseBetOptionsFragment()).commit();
+    }
+
+    @Override
+    public void onOptionsChoosed(List<BetOption> optionsSelected) {
+        Bet bet = new Bet(this);
+        bet.create(optionsSelected, new Bet.BetCallback() {
+
+            @Override
+            public void onCreateBet(boolean result) {
+
+                if (result) {
+                    Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_done)).show(MainActivity.this);
+
+                    // Go to Rewards
+                } else {
+                    Snackbar.with(getApplicationContext()).text(getString(R.string.msg_bet_fail)).show(MainActivity.this);
+                }
             }
         });
     }
