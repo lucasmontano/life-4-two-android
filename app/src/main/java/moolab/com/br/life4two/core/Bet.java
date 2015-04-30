@@ -24,9 +24,9 @@ public class Bet {
 
     private final Context context;
 
-    public static final int WAITING = 0;
-    public static final int IN_PROGRESS = 1;
-    public static final int FINISHED = 2;
+    public enum BetStatus {
+        WAITING, IN_PROGRESS, FINISHED;
+    }
 
     public interface CreateBetCallback {
 
@@ -62,7 +62,7 @@ public class Bet {
                     bet.put(ParseKeysMaster.TO, parseUser.getParseUser(ParseKeysMaster.BOO));
                 }
                 bet.put(ParseKeysMaster.REWARD, reward);
-                bet.put(ParseKeysMaster.STATUS, WAITING);
+                bet.put(ParseKeysMaster.STATUS, BetStatus.WAITING);
                 bet.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -78,7 +78,7 @@ public class Bet {
 
     public void getToDo(final GetBetCallback callback) {
         ParseQuery query = ParseQuery.getQuery(ParseKeysMaster.OBJECT_BET);
-        query.whereEqualTo(ParseKeysMaster.STATUS, WAITING);
+        query.whereEqualTo(ParseKeysMaster.STATUS, BetStatus.WAITING);
         query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.getFirstInBackground(new GetCallback() {
             @Override

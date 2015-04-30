@@ -99,10 +99,9 @@ public class MainActivity extends ActionBarActivity
                     return;
                 }
 
-                switch (bet.getInt(ParseKeysMaster.STATUS)) {
-                    case Bet.WAITING:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, new WaitingFragment()).commit();
-                        return;
+                if (bet.getInt(ParseKeysMaster.STATUS) == Bet.BetStatus.WAITING.ordinal()) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, new WaitingFragment()).commit();
+                    return;
                 }
             }
         });
