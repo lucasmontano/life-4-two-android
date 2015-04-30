@@ -62,7 +62,7 @@ public class Bet {
                     bet.put(ParseKeysMaster.TO, parseUser.getParseUser(ParseKeysMaster.BOO));
                 }
                 bet.put(ParseKeysMaster.REWARD, reward);
-                bet.put(ParseKeysMaster.STATUS, BetStatus.WAITING);
+                bet.put(ParseKeysMaster.STATUS, BetStatus.WAITING.ordinal());
                 bet.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -78,7 +78,7 @@ public class Bet {
 
     public void getToDo(final GetBetCallback callback) {
         ParseQuery query = ParseQuery.getQuery(ParseKeysMaster.OBJECT_BET);
-        query.whereEqualTo(ParseKeysMaster.STATUS, BetStatus.WAITING);
+        query.whereEqualTo(ParseKeysMaster.STATUS, BetStatus.WAITING.ordinal());
         query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.getFirstInBackground(new GetCallback() {
             @Override
