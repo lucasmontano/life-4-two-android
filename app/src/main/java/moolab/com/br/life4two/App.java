@@ -6,7 +6,8 @@ import com.parse.Parse;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseObject;
 
-import moolab.com.br.life4two.core.model.BetOption;
+import moolab.com.br.life4two.core.model.BetModel;
+import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.parsecloud.ParseConfig;
 
 /**
@@ -19,7 +20,8 @@ public class App extends Application {
 
         ParseCrashReporting.enable(this);
 
-        ParseObject.registerSubclass(BetOption.class);
+        ParseObject.registerSubclass(BetOptionModel.class);
+        ParseObject.registerSubclass(BetModel.class);
         Parse.initialize(this, ParseConfig.APP_ID, ParseConfig.CLIENT_KEY);
     }
 }
