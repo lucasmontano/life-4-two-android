@@ -51,7 +51,8 @@ public class Bet {
         parseUser.getQuery().getFirstInBackground(new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-                ParseObject bet = new ParseObject(ParseKeysMaster.OBJECT_BET);
+
+                BetModel bet = new BetModel();
 
                 ParseRelation relation = bet.getRelation(ParseKeysMaster.OPTIONS);
 
