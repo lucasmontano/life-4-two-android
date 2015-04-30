@@ -3,7 +3,6 @@ package moolab.com.br.life4two.core;
 import android.content.Context;
 import android.util.Log;
 
-import com.nispok.snackbar.Snackbar;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -14,7 +13,6 @@ import com.parse.SaveCallback;
 
 import java.util.List;
 
-import moolab.com.br.life4two.R;
 import moolab.com.br.life4two.core.model.BetModel;
 import moolab.com.br.life4two.core.model.BetOptionModel;
 import moolab.com.br.life4two.parsecloud.ParseKeysMaster;
@@ -26,9 +24,9 @@ public class Bet {
 
     private final Context context;
 
-    public static final int TODO = 0;
-    public static final int DOING = 1;
-    public static final int DONE = 2;
+    public static final int WAITING = 0;
+    public static final int IN_PROGRESS = 1;
+    public static final int FINISHED = 2;
 
     public interface CreateBetCallback {
 
@@ -64,7 +62,7 @@ public class Bet {
                     bet.put(ParseKeysMaster.TO, parseUser.getParseUser(ParseKeysMaster.BOO));
                 }
                 bet.put(ParseKeysMaster.REWARD, reward);
-                bet.put(ParseKeysMaster.STATUS, TODO);
+                bet.put(ParseKeysMaster.STATUS, WAITING);
                 bet.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -80,7 +78,7 @@ public class Bet {
 
     public void getToDo(final GetBetCallback callback) {
         ParseQuery query = ParseQuery.getQuery(ParseKeysMaster.OBJECT_BET);
-        query.whereEqualTo(ParseKeysMaster.STATUS, TODO);
+        query.whereEqualTo(ParseKeysMaster.STATUS, WAITING);
         query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.getFirstInBackground(new GetCallback() {
             @Override

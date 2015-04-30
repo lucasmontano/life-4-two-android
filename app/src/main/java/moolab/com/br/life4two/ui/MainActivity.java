@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity
                 }
 
                 switch (bet.getInt(ParseKeysMaster.STATUS)) {
-                    case Bet.TODO:
+                    case Bet.WAITING:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, new WaitingFragment()).commit();
                         return;
                 }
